@@ -21,4 +21,4 @@ SELECT COS(RADIANS(60.0)) AS COS;
 SELECT ROUND((RAND()*9)-6, 0) AS RAND;
 
 -- Определить (вывести в виде числа от 1 до 7) текущий день недели
-SELECT DATEPART(DW, GETDATE()) [Index Day today];
+SELECT DATEPART(DW, GETDATE()) AS [Index Day today];
