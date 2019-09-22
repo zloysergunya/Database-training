@@ -1,4 +1,4 @@
-﻿-- Вывести количество сделок, зафиксированных в БД.
+-- Вывести количество сделок, зафиксированных в БД.
 SELECT COUNT(*) AS [Count Deal]
 	FROM Deal;
 
@@ -18,7 +18,7 @@ SELECT MAX(Warehouse.Count) AS [Max Count Goods]
 SELECT COS(RADIANS(60.0)) AS COS;
 
 -- Получить целое случайное число в диапазоне (-7; 2)
-SELECT ROUND((RAND()*9)-6, 0) AS RAND;
+SELECT ROUND((RAND()*(-6 - 1) + 1), 0) AS RAND;
 
 -- Определить (вывести в виде числа от 1 до 7) текущий день недели
-SELECT DATEPART(DW, GETDATE()) AS [Index Day today];
+SELECT DATEPART(DW, GETDATE()) [Index Day today];
