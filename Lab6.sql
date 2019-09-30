@@ -51,4 +51,4 @@ SELECT *,
 		WHEN Client.gender = 'м' THEN 'Мужской'
 		WHEN Client.gender = 'ж' THEN 'Женский'
 	END AS [Пол]
-	FROM Client
+	FROM Client;
