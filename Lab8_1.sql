@@ -1,19 +1,19 @@
-/*Ранжируйте сотрудников по объемам продаж и выведите тройку лидеров.*/
-SELECT top 3 wr.name [Имя сотрудника], SUM(d.Count * w.Price) [Объём продаж], RANK() over(ORDER BY(SUM(d.Count * w.Price)) DESC) [Место]
+/*Р Р°РЅР¶РёСЂСѓР№С‚Рµ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ РїРѕ РѕР±СЉРµРјР°Рј РїСЂРѕРґР°Р¶ Рё РІС‹РІРµРґРёС‚Рµ С‚СЂРѕР№РєСѓ Р»РёРґРµСЂРѕРІ.*/
+SELECT top 3 wr.name [РРјСЏ СЃРѕС‚СЂСѓРґРЅРёРєР°], SUM(d.Count * w.Price) [РћР±СЉС‘Рј РїСЂРѕРґР°Р¶], RANK() over(ORDER BY(SUM(d.Count * w.Price)) DESC) [РњРµСЃС‚Рѕ]
 	FROM Worker wr JOIN Deal d 
 		ON wr.id = d.id_Worker
 		JOIN Warehouse w
 		ON w.id = d.id_Warehouse
 	GROUP BY wr.name;
 
-/*Вывести суммы сделок по месяцам для каждого сотрудника и показать разницу с
-предыдущим месяцем, в котором были зафиксированы сделки.*/
-SELECT wr.name, DATEPART(YEAR, d.Date) AS [Год], 
-				DATENAME(MONTH, d.Date) AS [Месяц], 
-				SUM(d.Count * w.Price) [Сумма],	
+/*Р’С‹РІРµСЃС‚Рё СЃСѓРјРјС‹ СЃРґРµР»РѕРє РїРѕ РјРµСЃСЏС†Р°Рј РґР»СЏ РєР°Р¶РґРѕРіРѕ СЃРѕС‚СЂСѓРґРЅРёРєР° Рё РїРѕРєР°Р·Р°С‚СЊ СЂР°Р·РЅРёС†Сѓ СЃ
+РїСЂРµРґС‹РґСѓС‰РёРј РјРµСЃСЏС†РµРј, РІ РєРѕС‚РѕСЂРѕРј Р±С‹Р»Рё Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅС‹ СЃРґРµР»РєРё.*/
+SELECT wr.name, DATEPART(YEAR, d.Date) AS [Р“РѕРґ], 
+				DATENAME(MONTH, d.Date) AS [РњРµСЃСЏС†], 
+				SUM(d.Count * w.Price) [РЎСѓРјРјР°],	
 				SUM(d.Count * w.Price)-(LAG(SUM(d.Count * w.Price), 1, 0) OVER(PARTITION BY w.name ORDER BY w.name, 
 					DATEPART(YEAR, d.Date), 
-					DATENAME(MONTH, d.Date))) AS [Разница]
+					DATENAME(MONTH, d.Date))) AS [Р Р°Р·РЅРёС†Р°]
 FROM Worker wr JOIN Deal d ON wr.id = d.id_Worker
 	JOIN Warehouse w ON d.id_Warehouse = w.id
 	GROUP BY wr.name, DATEPART(YEAR, d.Date), DATENAME(MONTH, d.Date);
