@@ -1,9 +1,9 @@
 USE Decanate;
 
-/*Создать функцию, определяющую средний бал по указанной дисциплине.
-Принимая идентификатор дисциплины, как входной параметр (например,
-ID_Disciplin), функция возвращает вещественное значение среднего балла среди
-всех студентов, сдававших экзамен.*/
+/*РЎРѕР·РґР°С‚СЊ С„СѓРЅРєС†РёСЋ, РѕРїСЂРµРґРµР»СЏСЋС‰СѓСЋ СЃСЂРµРґРЅРёР№ Р±Р°Р» РїРѕ СѓРєР°Р·Р°РЅРЅРѕР№ РґРёСЃС†РёРїР»РёРЅРµ.
+РџСЂРёРЅРёРјР°СЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РґРёСЃС†РёРїР»РёРЅС‹, РєР°Рє РІС…РѕРґРЅРѕР№ РїР°СЂР°РјРµС‚СЂ (РЅР°РїСЂРёРјРµСЂ,
+ID_Disciplin), С„СѓРЅРєС†РёСЏ РІРѕР·РІСЂР°С‰Р°РµС‚ РІРµС‰РµСЃС‚РІРµРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃСЂРµРґРЅРµРіРѕ Р±Р°Р»Р»Р° СЃСЂРµРґРё
+РІСЃРµС… СЃС‚СѓРґРµРЅС‚РѕРІ, СЃРґР°РІР°РІС€РёС… СЌРєР·Р°РјРµРЅ.*/
 IF OBJECT_ID ('Average_score', N'FN') IS NOT NULL  
     DROP FUNCTION Average_score;
 GO
@@ -28,10 +28,10 @@ RETURNS float(20)
 		FETCH NEXT FROM i INTO @mark
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
-			IF (@mark = N'Отл') SET @quantity_five = @quantity_five + 1;
-			IF (@mark = N'Хор') SET @quantity_four = @quantity_four + 1;
-			IF (@mark = N'Уд') SET @quantity_three = @quantity_three + 1;
-			IF (@mark = N'Неуд') SET @quantity_two = @quantity_two + 1;
+			IF (@mark = N'РћС‚Р»') SET @quantity_five = @quantity_five + 1;
+			IF (@mark = N'РҐРѕСЂ') SET @quantity_four = @quantity_four + 1;
+			IF (@mark = N'РЈРґ') SET @quantity_three = @quantity_three + 1;
+			IF (@mark = N'РќРµСѓРґ') SET @quantity_two = @quantity_two + 1;
 			FETCH NEXT FROM i INTO @mark
 		END 
 		CLOSE i
@@ -42,18 +42,18 @@ RETURNS float(20)
 END;
 
 GO
-SELECT dbo.Average_score(5) as [Среднее значение];
+SELECT dbo.Average_score(5) as [РЎСЂРµРґРЅРµРµ Р·РЅР°С‡РµРЅРёРµ];
 
-/*Создать процедуру, формирующую список зачетов и экзаменов, которые
-необходимо сдать студентам указанной группы в указанный семестр (входные
-параметры – группа и семестр).*/
+/*РЎРѕР·РґР°С‚СЊ РїСЂРѕС†РµРґСѓСЂСѓ, С„РѕСЂРјРёСЂСѓСЋС‰СѓСЋ СЃРїРёСЃРѕРє Р·Р°С‡РµС‚РѕРІ Рё СЌРєР·Р°РјРµРЅРѕРІ, РєРѕС‚РѕСЂС‹Рµ
+РЅРµРѕР±С…РѕРґРёРјРѕ СЃРґР°С‚СЊ СЃС‚СѓРґРµРЅС‚Р°Рј СѓРєР°Р·Р°РЅРЅРѕР№ РіСЂСѓРїРїС‹ РІ СѓРєР°Р·Р°РЅРЅС‹Р№ СЃРµРјРµСЃС‚СЂ (РІС…РѕРґРЅС‹Рµ
+РїР°СЂР°РјРµС‚СЂС‹ вЂ“ РіСЂСѓРїРїР° Рё СЃРµРјРµСЃС‚СЂ).*/
 IF OBJECT_ID('Session', 'P') IS NOT NULL  
     DROP PROCEDURE Session;  
 GO
 
 CREATE PROCEDURE Session @id_group INT, @semestr INT
 AS  
-	SELECT d.nameOfDisciplines as [Название дисциплины], d.accountability as [Тип отчётности]
+	SELECT d.nameOfDisciplines as [РќР°Р·РІР°РЅРёРµ РґРёСЃС†РёРїР»РёРЅС‹], d.accountability as [РўРёРї РѕС‚С‡С‘С‚РЅРѕСЃС‚Рё]
 	FROM Disciplines d
 	WHERE (@semestr = d.semestr) 
 		AND (d.spec = (SELECT Groups.id_Specialty	
