@@ -1,9 +1,9 @@
 USE Decanate;
 Go
 
-/*Выбор групп*/
+/*Р’С‹Р±РѕСЂ РіСЂСѓРїРї*/
 CREATE VIEW Groupss AS 
-	SELECT groups.id as [id Группы], disciplines.semestr as [Семестр], COUNT(disciplines.id) AS [Количество дисциплин] 
+	SELECT groups.id as [id Р“СЂСѓРїРїС‹], disciplines.semestr as [РЎРµРјРµСЃС‚СЂ], COUNT(disciplines.id) AS [РљРѕР»РёС‡РµСЃС‚РІРѕ РґРёСЃС†РёРїР»РёРЅ] 
 		FROM disciplines
 			INNER JOIN Groups ON Disciplines.spec = Groups.id_Specialty
 			GROUP BY Groups.id, disciplines.semestr
@@ -12,11 +12,11 @@ GO
 SELECT * FROM Groupss
 GO
 
-/*Подсчет количества оценок*/
+/*РџРѕРґСЃС‡РµС‚ РєРѕР»РёС‡РµСЃС‚РІР° РѕС†РµРЅРѕРє*/
 CREATE VIEW Scores AS 
-	SELECT Students.lastName AS [Фамилия], Students.firstName AS [Имя], Students.middleName AS [Отчество], Students.group_id [id Группы], semestr AS [Семестр], COUNT(score) AS [Количество оценок]
+	SELECT Students.lastName AS [Р¤Р°РјРёР»РёСЏ], Students.firstName AS [РРјСЏ], Students.middleName AS [РћС‚С‡РµСЃС‚РІРѕ], Students.group_id [id Р“СЂСѓРїРїС‹], semestr AS [РЎРµРјРµСЃС‚СЂ], COUNT(score) AS [РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС†РµРЅРѕРє]
 	FROM Studing
-		JOIN Students ON Studing.num_zach = Students.num_zach AND (Studing.score ='Отл' OR Studing.score ='Зач')
+		JOIN Students ON Studing.num_zach = Students.num_zach AND (Studing.score ='РћС‚Р»' OR Studing.score ='Р—Р°С‡')
 		JOIN Disciplines ON Studing.id_disc = Disciplines.id
 	GROUP BY Students.lastName, Students.firstName, Students.middleName, Students.group_id, semestr
 GO
@@ -24,12 +24,12 @@ GO
 SELECT * FROM Scores
 GO
 
-/*Выбор отличников*/
+/*Р’С‹Р±РѕСЂ РѕС‚Р»РёС‡РЅРёРєРѕРІ*/
 CREATE VIEW Honours_pupils AS 
-	SELECT Scores.Фамилия, Scores.Имя, Scores.Отчество, Groupss.[id Группы], Groupss.Семестр
+	SELECT Scores.Р¤Р°РјРёР»РёСЏ, Scores.РРјСЏ, Scores.РћС‚С‡РµСЃС‚РІРѕ, Groupss.[id Р“СЂСѓРїРїС‹], Groupss.РЎРµРјРµСЃС‚СЂ
 		FROM Groupss 
-			INNER JOIN Scores ON Scores.[id Группы] = Groupss.[id Группы]
-			WHERE Groupss.Семестр = Scores.Семестр AND Scores.[Количество оценок] = Groupss.[Количество дисциплин]
+			INNER JOIN Scores ON Scores.[id Р“СЂСѓРїРїС‹] = Groupss.[id Р“СЂСѓРїРїС‹]
+			WHERE Groupss.РЎРµРјРµСЃС‚СЂ = Scores.РЎРµРјРµСЃС‚СЂ AND Scores.[РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС†РµРЅРѕРє] = Groupss.[РљРѕР»РёС‡РµСЃС‚РІРѕ РґРёСЃС†РёРїР»РёРЅ]
 GO
 
 SELECT * FROM Honours_pupils
